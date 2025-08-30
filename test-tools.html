@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Testing - Utility Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-8">🧪 Tool Testing Dashboard</h1>
+        
+        <!-- Test Results -->
+        <div id="testResults" class="space-y-4"></div>
+        
+        <!-- Individual Tool Test -->
+        <div class="bg-white rounded-lg p-6 mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Individual Tool Test</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <select id="toolSelect" class="border rounded-lg p-2">
+                    <option value="">Select a tool to test</option>
+                </select>
+                <button id="testTool" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700">
+                    Test Tool
+                </button>
+                <button id="testAllTools" class="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700">
+                    Test All Tools
+                </button>
+            </div>
+            <div id="individualTest" class="mt-4 p-4 border rounded-lg hidden">
+                <!-- Individual test results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Framework Scripts -->
+    <script src="shared/utils/storage.js"></script>
+    <script src="shared/utils/calculations.js"></script>
+    <script src="shared/utils/formatters.js"></script>
+    <script src="shared/utils/validators.js"></script>
+    <script src="shared/components/ui.js"></script>
+    <script src="shared/components/forms.js"></script>
+    <script src="shared/components/results.js"></script>
+    <script src="shared/components/tool-templates.js"></script>
+    <script src="shared/components/tool-registry.js"></script>
+    
+    <!-- Tool Libraries -->
+    <script src="tools/calculators/financial-tools.js"></script>
+    <script src="tools/calculators/financial-tools-2.js"></script>
+    <script src="tools/calculators/health-fitness-tools.js"></script>
+    <script src="tools/calculators/math-science-tools.js"></script>
+    <script src="tools/calculators/advanced-calculators.js"></script>
+    <script src="tools/converters/unit-converters.js"></script>
+    <script src="tools/converters/data-format-tools.js"></script>
+    <script src="tools/utilities/text-tools.js"></script>
+    <script src="tools/utilities/text-tools-2.js"></script>
+    <script src="tools/utilities/dev-tools.js"></script>
+    <script src="tools/generators/security-tools.js"></script>
+    <script src="tools/design/color-design-tools.js"></script>
+    <script src="tools/design/design-tools-2.js"></script>
+    <script src="tools/visualization/chart-tools.js"></script>
+    <script src="tools/visualization/chart-tools-2.js"></script>
+    <script src="tools/media/image-tools.js"></script>
+    <script src="tools/media/image-tools-2.js"></script>
+    <script src="tools/media/image-tools-3.js"></script>
+    <script src="tools/business/seo-tools.js"></script>
+    <script src="tools/business/productivity-tools.js"></script>
+    <script src="tools/business/pdf-tools.js"></script>
+    <script src="tools/business/api-tools.js"></script>
+    <script src="tools/business/file-tools.js"></script>
+
+    <script>
+        // Tool Testing Framework
+        class ToolTester {
+            constructor() {
+                this.testResults = [];
+                this.init();
+            }
+            
+            init() {
+                // Wait for all tools to load
+                setTimeout(() => {
+                    this.populateToolSelect();
+                    this.runBasicTests();
+                    this.setupEventListeners();
+                }, 1000);
+            }
+            
+            populateToolSelect() {
+                const select = document.getElementById('toolSelect');
+                const tools = Array.from(ToolRegistry.tools.values());
+                
+                tools.forEach(tool => {
+                    const option = document.createElement('option');
+                    option.value = tool.id;
+                    option.textContent = `${tool.name} (${tool.category})`;
+                    select.appendChild(option);
+                });
+            }
+            
+            setupEventListeners() {
+                document.getElementById('testTool').addEventListener('click', () => {
+                    const toolId = document.getElementById('toolSelect').value;
+                    if (toolId) {
+                        this.testIndividualTool(toolId);
+                    }
+                });
+                
+                document.getElementById('testAllTools').addEventListener('click', () => {
+                    this.testAllTools();
+                });
+            }
+            
+            runBasicTests() {
+                const results = document.getElementById('testResults');
+                
+                // Test 1: Tool Registry
+                const registryTest = this.testToolRegistry();
+                results.appendChild(this.createTestCard('Tool Registry', registryTest));
+                
+                // Test 2: Tool Categories
+                const categoryTest = this.testToolCategories();
+                results.appendChild(this.createTestCard('Tool Categories', categoryTest));
+                
+                // Test 3: Tool Templates
+                const templateTest = this.testToolTemplates();
+                results.appendChild(this.createTestCard('Tool Templates', templateTest));
+                
+                // Test 4: Sample Tool Calculations
+                const calculationTest = this.testSampleCalculations();
+                results.appendChild(this.createTestCard('Sample Calculations', calculationTest));
+            }
+            
+            testToolRegistry() {
+                const tests = [];
+                
+                // Check if ToolRegistry exists
+                tests.push({
+                    name: 'ToolRegistry exists',
+                    status: typeof ToolRegistry !== 'undefined' ? 'pass' : 'fail',
+                    details: typeof ToolRegistry !== 'undefined' ? 'ToolRegistry is available' : 'ToolRegistry not found'
+                });
+                
+                // Check tool count
+                const toolCount = ToolRegistry.tools ? ToolRegistry.tools.size : 0;
+                tests.push({
+                    name: 'Tool count',
+                    status: toolCount >= 100 ? 'pass' : (toolCount > 0 ? 'warning' : 'fail'),
+                    details: `${toolCount} tools registered (expected: 145+)`
+                });
+                
+                return tests;
+            }
+            
+            testToolCategories() {
+                const tests = [];
+                const expectedCategories = ['calculators', 'converters', 'utilities', 'generators', 'design', 'visualization', 'media', 'business'];
+                const tools = Array.from(ToolRegistry.tools.values());
+                const actualCategories = [...new Set(tools.map(tool => tool.category))];
+                
+                expectedCategories.forEach(category => {
+                    const hasCategory = actualCategories.includes(category);
+                    const toolsInCategory = tools.filter(tool => tool.category === category).length;
+                    
+                    tests.push({
+                        name: `Category: ${category}`,
+                        status: hasCategory ? 'pass' : 'fail',
+                        details: hasCategory ? `${toolsInCategory} tools in category` : 'Category missing'
+                    });
+                });
+                
+                return tests;
+            }
+            
+            testToolTemplates() {
+                const tests = [];
+                
+                // Check if ToolTemplates exists
+                tests.push({
+                    name: 'ToolTemplates exists',
+                    status: typeof ToolTemplates !== 'undefined' ? 'pass' : 'fail',
+                    details: typeof ToolTemplates !== 'undefined' ? 'ToolTemplates is available' : 'ToolTemplates not found'
+                });
+                
+                // Check template methods
+                const templateMethods = ['createCalculator', 'createConverter', 'createGenerator', 'createTextProcessor'];
+                templateMethods.forEach(method => {
+                    tests.push({
+                        name: `Template method: ${method}`,
+                        status: ToolTemplates && typeof ToolTemplates[method] === 'function' ? 'pass' : 'fail',
+                        details: ToolTemplates && typeof ToolTemplates[method] === 'function' ? 'Method available' : 'Method missing'
+                    });
+                });
+                
+                return tests;
+            }
+            
+            testSampleCalculations() {
+                const tests = [];
+                
+                // Test a few sample tools
+                const sampleTests = [
+                    {
+                        toolId: 'tip-calculator',
+                        input: { billAmount: 100, tipPercentage: 20, splitBetween: 2 },
+                        expectedFields: ['tipAmount', 'totalAmount', 'perPerson']
+                    },
+                    {
+                        toolId: 'bmi-calculator',
+                        input: { height: 170, weight: 70, unit: 'metric' },
+                        expectedFields: ['bmi', 'category']
+                    },
+                    {
+                        toolId: 'percentage-calculator',
+                        input: { number1: 50, number2: 200 },
+                        expectedFields: ['result']
+                    }
+                ];
+                
+                sampleTests.forEach(test => {
+                    try {
+                        const tool = ToolRegistry.tools.get(test.toolId);
+                        if (!tool) {
+                            tests.push({
+                                name: `Tool: ${test.toolId}`,
+                                status: 'fail',
+                                details: 'Tool not found in registry'
+                            });
+                            return;
+                        }
+                        
+                        let result;
+                        if (tool.calculate) {
+                            result = tool.calculate(test.input);
+                        } else if (tool.generate) {
+                            result = tool.generate(test.input);
+                        } else if (tool.process) {
+                            result = tool.process(test.input);
+                        }
+                        
+                        if (result && !result.error) {
+                            const hasExpectedFields = test.expectedFields.some(field => 
+                                result.hasOwnProperty(field) || 
+                                Object.values(result).some(val => 
+                                    typeof val === 'object' && val.hasOwnProperty(field)
+                                )
+                            );
+                            
+                            tests.push({
+                                name: `Tool: ${test.toolId}`,
+                                status: hasExpectedFields ? 'pass' : 'warning',
+                                details: hasExpectedFields ? 'Calculation successful' : 'Unexpected result format'
+                            });
+                        } else {
+                            tests.push({
+                                name: `Tool: ${test.toolId}`,
+                                status: 'fail',
+                                details: result?.error || 'Calculation failed'
+                            });
+                        }
+                    } catch (error) {
+                        tests.push({
+                            name: `Tool: ${test.toolId}`,
+                            status: 'fail',
+                            details: error.message
+                        });
+                    }
+                });
+                
+                return tests;
+            }
+            
+            testIndividualTool(toolId) {
+                const tool = ToolRegistry.tools.get(toolId);
+                const resultsDiv = document.getElementById('individualTest');
+                
+                if (!tool) {
+                    resultsDiv.innerHTML = '<p class="text-red-600">Tool not found!</p>';
+                    resultsDiv.classList.remove('hidden');
+                    return;
+                }
+                
+                const tests = [];
+                
+                // Basic tool structure tests
+                tests.push({
+                    name: 'Has ID',
+                    status: tool.id ? 'pass' : 'fail',
+                    details: tool.id || 'Missing ID'
+                });
+                
+                tests.push({
+                    name: 'Has Name',
+                    status: tool.name ? 'pass' : 'fail',
+                    details: tool.name || 'Missing name'
+                });
+                
+                tests.push({
+                    name: 'Has Description',
+                    status: tool.description ? 'pass' : 'fail',
+                    details: tool.description || 'Missing description'
+                });
+                
+                tests.push({
+                    name: 'Has Category',
+                    status: tool.category ? 'pass' : 'fail',
+                    details: tool.category || 'Missing category'
+                });
+                
+                tests.push({
+                    name: 'Has Processing Function',
+                    status: (tool.calculate || tool.generate || tool.process) ? 'pass' : 'fail',
+                    details: tool.calculate ? 'calculate()' : tool.generate ? 'generate()' : tool.process ? 'process()' : 'No processing function'
+                });
+                
+                tests.push({
+                    name: 'Has Fields',
+                    status: (tool.fields && Array.isArray(tool.fields) && tool.fields.length > 0) ? 'pass' : 'warning',
+                    details: tool.fields ? `${tool.fields.length} fields defined` : 'No fields defined'
+                });
+                
+                // Try to run the tool with sample data
+                try {
+                    const sampleData = this.generateSampleData(tool);
+                    let result;
+                    
+                    if (tool.calculate) {
+                        result = tool.calculate(sampleData);
+                    } else if (tool.generate) {
+                        result = tool.generate(sampleData);
+                    } else if (tool.process) {
+                        result = tool.process(sampleData);
+                    }
+                    
+                    tests.push({
+                        name: 'Sample Execution',
+                        status: result && !result.error ? 'pass' : 'fail',
+                        details: result?.error || 'Executed successfully'
+                    });
+                } catch (error) {
+                    tests.push({
+                        name: 'Sample Execution',
+                        status: 'fail',
+                        details: error.message
+                    });
+                }
+                
+                // Render results
+                resultsDiv.innerHTML = `
+                    <h3 class="text-lg font-semibold mb-2">Testing: ${tool.name}</h3>
+                    <div class="space-y-2">
+                        ${tests.map(test => `
+                            <div class="flex items-center space-x-2">
+                                <span class="w-4 h-4 rounded-full ${test.status === 'pass' ? 'bg-green-500' : test.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'}"></span>
+                                <span class="font-medium">${test.name}:</span>
+                                <span class="text-gray-600">${test.details}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                resultsDiv.classList.remove('hidden');
+            }
+            
+            generateSampleData(tool) {
+                if (!tool.fields) return {};
+                
+                const sampleData = {};
+                
+                tool.fields.forEach(field => {
+                    switch (field.type) {
+                        case 'number':
+                            sampleData[field.name] = field.defaultValue || 10;
+                            break;
+                        case 'text':
+                        case 'textarea':
+                            sampleData[field.name] = field.defaultValue || 'sample text';
+                            break;
+                        case 'select':
+                            sampleData[field.name] = field.defaultValue || (field.options && field.options[0]?.value) || 'option1';
+                            break;
+                        case 'checkbox':
+                            sampleData[field.name] = field.defaultValue || false;
+                            break;
+                        case 'range':
+                            sampleData[field.name] = field.defaultValue || field.min || 0;
+                            break;
+                        default:
+                            sampleData[field.name] = field.defaultValue || 'sample';
+                    }
+                });
+                
+                return sampleData;
+            }
+            
+            testAllTools() {
+                const tools = Array.from(ToolRegistry.tools.values());
+                const resultsDiv = document.getElementById('individualTest');
+                
+                resultsDiv.innerHTML = '<div class="text-center"><div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div><p class="mt-2">Testing all tools...</p></div>';
+                resultsDiv.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    const allResults = [];
+                    let passCount = 0;
+                    let warnCount = 0;
+                    let failCount = 0;
+                    
+                    tools.forEach(tool => {
+                        try {
+                            const sampleData = this.generateSampleData(tool);
+                            let result;
+                            
+                            if (tool.calculate) {
+                                result = tool.calculate(sampleData);
+                            } else if (tool.generate) {
+                                result = tool.generate(sampleData);
+                            } else if (tool.process) {
+                                result = tool.process(sampleData);
+                            }
+                            
+                            const status = result && !result.error ? 'pass' : 'fail';
+                            allResults.push({
+                                name: tool.name,
+                                id: tool.id,
+                                category: tool.category,
+                                status: status,
+                                details: result?.error || 'OK'
+                            });
+                            
+                            if (status === 'pass') passCount++;
+                            else if (status === 'warning') warnCount++;
+                            else failCount++;
+                            
+                        } catch (error) {
+                            allResults.push({
+                                name: tool.name,
+                                id: tool.id,
+                                category: tool.category,
+                                status: 'fail',
+                                details: error.message
+                            });
+                            failCount++;
+                        }
+                    });
+                    
+                    // Group by category
+                    const byCategory = {};
+                    allResults.forEach(result => {
+                        if (!byCategory[result.category]) {
+                            byCategory[result.category] = [];
+                        }
+                        byCategory[result.category].push(result);
+                    });
+                    
+                    resultsDiv.innerHTML = `
+                        <h3 class="text-lg font-semibold mb-4">All Tools Test Results</h3>
+                        <div class="mb-4 p-3 bg-gray-100 rounded">
+                            <div class="flex space-x-4 text-sm">
+                                <span class="text-green-600">✓ Pass: ${passCount}</span>
+                                <span class="text-yellow-600">⚠ Warning: ${warnCount}</span>
+                                <span class="text-red-600">✗ Fail: ${failCount}</span>
+                                <span class="text-gray-600">Total: ${tools.length}</span>
+                            </div>
+                        </div>
+                        ${Object.entries(byCategory).map(([category, results]) => `
+                            <div class="mb-4">
+                                <h4 class="font-semibold text-md mb-2 capitalize">${category} (${results.length})</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                    ${results.map(result => `
+                                        <div class="flex items-center space-x-2 p-2 rounded ${result.status === 'pass' ? 'bg-green-50' : result.status === 'warning' ? 'bg-yellow-50' : 'bg-red-50'}">
+                                            <span class="w-3 h-3 rounded-full ${result.status === 'pass' ? 'bg-green-500' : result.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'}"></span>
+                                            <span class="font-medium">${result.name}</span>
+                                            <span class="text-gray-500 text-xs">${result.details}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    `;
+                }, 100);
+            }
+            
+            createTestCard(title, tests) {
+                const passCount = tests.filter(t => t.status === 'pass').length;
+                const warnCount = tests.filter(t => t.status === 'warning').length;
+                const failCount = tests.filter(t => t.status === 'fail').length;
+                
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg shadow-sm border p-6';
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">${title}</h3>
+                        <div class="flex space-x-2 text-sm">
+                            <span class="text-green-600">✓ ${passCount}</span>
+                            <span class="text-yellow-600">⚠ ${warnCount}</span>
+                            <span class="text-red-600">✗ ${failCount}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        ${tests.map(test => `
+                            <div class="flex items-center space-x-2">
+                                <span class="w-4 h-4 rounded-full ${test.status === 'pass' ? 'bg-green-500' : test.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'}"></span>
+                                <span class="font-medium">${test.name}:</span>
+                                <span class="text-gray-600">${test.details}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                return card;
+            }
+        }
+        
+        // Initialize tester when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            new ToolTester();
+        });
+    </script>
+</body>
+</html>
