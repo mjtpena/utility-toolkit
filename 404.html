@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utility Toolkit - 149+ Free Static Tools</title>
-    <meta name="description" content="Replace expensive SaaS tools with 149+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
+    <title>Utility Toolkit - 145+ Free Static Tools</title>
+    <meta name="description" content="Replace expensive SaaS tools with 145+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
     <meta name="keywords" content="calculator, converter, utility tools, free tools, client-side tools, privacy-focused, no signup">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://michaeljohnpena.com/utility-toolkit/">
-    <meta property="og:title" content="Utility Toolkit - 149+ Free Static Tools">
-    <meta property="og:description" content="Replace expensive SaaS tools with 149+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
-    <meta property="og:image" content="https://michaeljohnpena.com/utility-toolkit/og-image.svg">
+    <meta property="og:title" content="Utility Toolkit - 145+ Free Static Tools">
+    <meta property="og:description" content="Replace expensive SaaS tools with 145+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
+    <meta property="og:image" content="https://michaeljohnpena.com/utility-toolkit/og-image.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://michaeljohnpena.com/utility-toolkit/">
-    <meta name="twitter:title" content="Utility Toolkit - 149+ Free Static Tools">
-    <meta name="twitter:description" content="Replace expensive SaaS tools with 149+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
-    <meta name="twitter:image" content="https://michaeljohnpena.com/utility-toolkit/og-image.svg">
+    <meta name="twitter:title" content="Utility Toolkit - 145+ Free Static Tools">
+    <meta name="twitter:description" content="Replace expensive SaaS tools with 145+ free, static utility tools. Business, PDF, API, file utilities, advanced calculators and more - all client-side.">
+    <meta name="twitter:image" content="https://michaeljohnpena.com/utility-toolkit/og-image.png">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://michaeljohnpena.com/utility-toolkit/">
@@ -83,7 +83,7 @@
             <div class="text-center">
                 <div class="text-6xl mb-6 animate-pulse">🛠️</div>
                 <div class="text-2xl font-bold text-gray-800 mb-4">Loading Utility Toolkit</div>
-                <div class="text-gray-600">149+ Free Static Tools</div>
+                <div class="text-gray-600">145+ Free Static Tools</div>
                 <div class="mt-8">
                     <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
                 </div>
@@ -132,5 +132,17 @@
     <script src="shared/components/router.js"></script>
     <script src="shared/components/page-generator.js"></script>
     <script src="shared/components/route-init.js"></script>
+    
+    <!-- GitHub Pages SPA routing fallback -->
+    <script>
+        // Redirect to the base URL with the path as a hash for client-side routing
+        const path = window.location.pathname;
+        if (path !== '/' && path !== '/utility-toolkit/') {
+            const newPath = path.replace('/utility-toolkit', '');
+            if (newPath !== '/') {
+                window.location.replace(window.location.origin + '/utility-toolkit/#' + newPath);
+            }
+        }
+    </script>
 </body>
 </html>

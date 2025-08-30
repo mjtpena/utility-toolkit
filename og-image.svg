@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Main Title -->
+  <text x="600" y="200" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" text-anchor="middle" fill="white">
+    🛠️ Utility Toolkit
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="280" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="600" text-anchor="middle" fill="rgba(255,255,255,0.9)">
+    149+ Free Static Tools
+  </text>
+  
+  <!-- Description -->
+  <text x="600" y="350" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="400" text-anchor="middle" fill="rgba(255,255,255,0.8)">
+    Replace expensive SaaS subscriptions with free, privacy-focused tools
+  </text>
+  
+  <!-- Features -->
+  <text x="300" y="450" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="500" text-anchor="middle" fill="rgba(255,255,255,0.9)">
+    ✅ 100% Client-Side
+  </text>
+  <text x="600" y="450" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="500" text-anchor="middle" fill="rgba(255,255,255,0.9)">
+    🔒 Privacy-Focused
+  </text>
+  <text x="900" y="450" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="500" text-anchor="middle" fill="rgba(255,255,255,0.9)">
+    🚀 No Sign-up Required
+  </text>
+  
+  <!-- Bottom URL -->
+  <text x="600" y="550" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="400" text-anchor="middle" fill="rgba(255,255,255,0.7)">
+    michaeljohnpena.com/utility-toolkit
+  </text>
+</svg>

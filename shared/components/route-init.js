@@ -87,7 +87,27 @@ class RouteInitializer {
         
         // Search results
         this.router.addRoute('/search', (container) => {
-            const query = new URLSearchParams(window.location.search).get('q') || '';
+            let query = '';
+            try {
+                // Use URLSearchParams with fallback for older browsers
+                if (typeof URLSearchParams !== 'undefined') {
+                    query = new URLSearchParams(window.location.search).get('q') || '';
+                } else {
+                    // Fallback for older browsers
+                    const params = window.location.search.substring(1).split('&');
+                    for (let param of params) {
+                        const [key, value] = param.split('=');
+                        if (key === 'q') {
+                            query = decodeURIComponent(value || '');
+                            break;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Error parsing search query:', e);
+                query = '';
+            }
+            
             container.innerHTML = this.createSearchPage(query);
             this.initializeMobileMenu();
         }, {
@@ -471,9 +491,19 @@ class RouteInitializer {
     }
 }
 
-// Initialize routing when DOM is ready
+// Initialize routing when DOM is ready and tools are loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.routeInitializer = new RouteInitializer();
+    // Wait for tools to be loaded with optimized timing
+    const initializeWhenReady = () => {
+        if (typeof ToolRegistry !== 'undefined' && ToolRegistry.tools && ToolRegistry.tools.size > 0) {
+            window.routeInitializer = new RouteInitializer();
+        } else {
+            // Use shorter interval for faster initialization
+            setTimeout(initializeWhenReady, 25);
+        }
+    };
+    
+    initializeWhenReady();
 });
 
 console.log('✅ Route Initializer loaded successfully');

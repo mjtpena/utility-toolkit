@@ -288,22 +288,25 @@ class PageGenerator {
                                 ${field.label}${field.required ? ' *' : ''}
                             </label>
                             <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-500">${field.min || 0}</span>
-                                <input
-                                    type="range"
-                                    id="${field.name}"
-                                    name="${field.name}"
-                                    min="${field.min || 0}"
-                                    max="${field.max || 100}"
-                                    step="${field.step || 1}"
-                                    value="${field.defaultValue || field.min || 0}"
-                                    class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                                    oninput="document.getElementById('${field.name}_value').textContent = this.value"
-                                >
-                                <span class="text-sm text-gray-500">${field.max || 100}</span>
+                                <span class="text-sm text-gray-500 min-w-[3rem] text-right">${field.min || 0}</span>
+                                <div class="flex-1 relative">
+                                    <input
+                                        type="range"
+                                        id="${field.name}"
+                                        name="${field.name}"
+                                        min="${field.min || 0}"
+                                        max="${field.max || 100}"
+                                        step="${field.step || 1}"
+                                        value="${field.defaultValue || field.min || 0}"
+                                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                                        oninput="updateRangeValue(this, '${field.name}')"
+                                        style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 ${((field.defaultValue || field.min || 0) - (field.min || 0)) / ((field.max || 100) - (field.min || 0)) * 100}%, #D1D5DB ${((field.defaultValue || field.min || 0) - (field.min || 0)) / ((field.max || 100) - (field.min || 0)) * 100}%, #D1D5DB 100%);"
+                                    >
+                                </div>
+                                <span class="text-sm text-gray-500 min-w-[3rem]">${field.max || 100}</span>
                             </div>
                             <div class="text-center mt-2">
-                                <span class="text-sm font-medium">Value: <span id="${field.name}_value">${field.defaultValue || field.min || 0}</span></span>
+                                <span class="text-sm font-medium text-blue-600">Value: <span id="${field.name}_value" class="font-bold">${field.defaultValue || field.min || 0}</span></span>
                             </div>
                         </div>`;
                     break;
@@ -533,6 +536,23 @@ class PageGenerator {
         };
         return categoryNames[category] || category.charAt(0).toUpperCase() + category.slice(1);
     }
+}
+
+// Global helper functions for form interactions
+function updateRangeValue(rangeInput, fieldName) {
+    const value = rangeInput.value;
+    const valueSpan = document.getElementById(fieldName + '_value');
+    
+    if (valueSpan) {
+        valueSpan.textContent = value;
+    }
+    
+    // Update slider background to show progress
+    const min = parseFloat(rangeInput.min) || 0;
+    const max = parseFloat(rangeInput.max) || 100;
+    const percentage = ((value - min) / (max - min)) * 100;
+    
+    rangeInput.style.background = `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${percentage}%, #D1D5DB ${percentage}%, #D1D5DB 100%)`;
 }
 
 // Export page generator
