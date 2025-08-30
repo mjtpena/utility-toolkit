@@ -9,6 +9,15 @@ class UtilityRouter {
         this.currentRoute = null;
         this.defaultRoute = '/';
         
+        // Detect GitHub Pages base path
+        this.basePath = '';
+        if (window.location.hostname.includes('github.io')) {
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            if (pathSegments.length > 0) {
+                this.basePath = '/' + pathSegments[0];
+            }
+        }
+        
         // Initialize router only if autoInit is true
         if (autoInit) {
             this.init();
@@ -18,14 +27,17 @@ class UtilityRouter {
     init() {
         // Handle browser back/forward buttons
         window.addEventListener('popstate', (event) => {
-            this.navigate(location.pathname, false);
+            const routePath = this.stripBasePath(location.pathname);
+            this.navigate(routePath, false);
         });
         
         // Handle initial page load with optimized delay
         const initializeRouter = () => {
             // Check if tools are loaded before navigating
             if (typeof ToolRegistry !== 'undefined' && ToolRegistry.tools && ToolRegistry.tools.size > 0) {
-                this.navigate(location.pathname, false);
+                // Strip base path from current location for routing
+                const routePath = this.stripBasePath(location.pathname);
+                this.navigate(routePath, false);
             } else {
                 // Retry with shorter interval for faster loading
                 setTimeout(initializeRouter, 25);
@@ -43,7 +55,9 @@ class UtilityRouter {
             const link = event.target.closest('a[href^="/"]');
             if (link && !link.hasAttribute('target')) {
                 event.preventDefault();
-                this.navigate(link.getAttribute('href'));
+                const href = link.getAttribute('href');
+                const routePath = this.stripBasePath(href);
+                this.navigate(routePath);
             }
         });
     }
@@ -90,7 +104,8 @@ class UtilityRouter {
         
         // Update browser history
         if (pushState) {
-            history.pushState({ path }, '', path);
+            const fullPath = this.addBasePath(path);
+            history.pushState({ path }, '', fullPath);
         }
         
         // Update page metadata
@@ -119,18 +134,18 @@ class UtilityRouter {
         // Update Open Graph tags
         this.updateMetaTag('og:title', route.title, 'property');
         this.updateMetaTag('og:description', route.description, 'property');
-        this.updateMetaTag('og:url', window.location.origin + path, 'property');
+        this.updateMetaTag('og:url', window.location.origin + this.addBasePath(path), 'property');
         this.updateMetaTag('og:type', 'website', 'property');
-        this.updateMetaTag('og:image', window.location.origin + '/og-image.png', 'property');
+        this.updateMetaTag('og:image', window.location.origin + this.addBasePath('/og-image.svg'), 'property');
         
         // Update Twitter tags
         this.updateMetaTag('twitter:card', 'summary_large_image');
         this.updateMetaTag('twitter:title', route.title);
         this.updateMetaTag('twitter:description', route.description);
-        this.updateMetaTag('twitter:image', window.location.origin + '/og-image.png');
+        this.updateMetaTag('twitter:image', window.location.origin + this.addBasePath('/og-image.svg'));
         
         // Update canonical URL
-        this.updateLinkTag('canonical', window.location.origin + path);
+        this.updateLinkTag('canonical', window.location.origin + this.addBasePath(path));
         
         // Update breadcrumb structured data
         this.updateBreadcrumbData(path, route);
@@ -561,6 +576,21 @@ class UtilityRouter {
             description: route.description,
             category: route.category
         }));
+    }
+    
+    // Helper methods for GitHub Pages base path handling
+    stripBasePath(pathname) {
+        if (this.basePath && pathname.startsWith(this.basePath)) {
+            return pathname.substring(this.basePath.length) || '/';
+        }
+        return pathname;
+    }
+    
+    addBasePath(path) {
+        if (this.basePath) {
+            return this.basePath + (path === '/' ? '' : path);
+        }
+        return path;
     }
 }
 
