@@ -3,9 +3,9 @@
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://michaeljohnpena.com/utility-toolkit/)
 [![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-green?style=for-the-badge)](https://github.com/mjtpena/utility-toolkit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Tools Count](https://img.shields.io/badge/Tools-113+-brightgreen?style=for-the-badge)](#tools-list)
+[![Tools Count](https://img.shields.io/badge/Tools-145+-brightgreen?style=for-the-badge)](#tools-list)
 
-> Replace expensive SaaS subscriptions with **113+ free, privacy-focused, client-side utility tools**. No data collection, no sign-ups, no servers required.
+> Replace expensive SaaS subscriptions with **145+ free, privacy-focused, client-side utility tools**. No data collection, no sign-ups, no servers required.
 
 ## 🎯 Mission
 Replace expensive SaaS tools with professional-grade utilities that run entirely in your browser. Complete privacy, no backend required.
@@ -163,6 +163,39 @@ Replace expensive SaaS tools with professional-grade utilities that run entirely
 - **Favicon Generator** - Generate favicons in all sizes
 - **Image Placeholder Generator** - Create placeholder images
 - **Color Palette Extractor** - Extract color palettes from images
+
+### 🏢 Business & Productivity Tools (32 tools)
+- **SEO Meta Tag Generator** - Generate complete SEO meta tags with Open Graph support
+- **Keyword Density Analyzer** - Analyze keyword density and SEO metrics for content
+- **Social Media Hashtag Generator** - Generate platform-specific hashtags with recommendations
+- **Invoice Generator** - Create professional invoices with automatic calculations
+- **Time Zone Converter** - Convert times across global time zones for meetings
+- **Meeting Cost Calculator** - Calculate meeting costs and ROI analysis
+- **PDF Text Extractor** - Extract text content from PDF documents
+- **PDF Merger** - Merge multiple PDF files with bookmark management
+- **PDF Splitter** - Split PDFs by pages, ranges, or file size
+- **PDF Watermark Generator** - Add text or image watermarks to documents
+- **PDF Metadata Editor** - Edit document properties and metadata
+- **API Request Builder** - Build and test HTTP requests with full customization
+- **JSON Schema Validator** - Validate JSON against schemas and generate schemas
+- **API Mock Generator** - Generate realistic mock API responses for testing
+- **Webhook Tester** - Generate and validate webhook payloads for services
+- **File Hash Calculator** - Calculate MD5, SHA-1, SHA-256 hashes for files
+- **File Size Analyzer** - Analyze file sizes with optimization suggestions
+- **File Extension Converter** - Get file extension info and conversion options
+- **Duplicate File Finder** - Find duplicate files by name, size, or content
+- **File Organizer** - Generate file organization strategies and folder structures
+- **File Name Sanitizer** - Clean file names for cross-platform compatibility
+
+### 🧮 Advanced Calculator Tools (8 tools)
+- **Scientific Calculator** - Advanced calculator with trigonometric and logarithmic functions
+- **Statistical Calculator** - Comprehensive statistical analysis for datasets
+- **Matrix Calculator** - Matrix operations including multiplication, determinant, inverse
+- **Loan Amortization Calculator** - Generate detailed loan schedules with payment breakdowns
+- **Unit Circle Calculator** - Calculate trigonometric values on the unit circle
+- **Polynomial Calculator** - Analyze polynomials, find roots, derivatives, and integrals
+- **Complex Number Calculator** - Operations with complex numbers in rectangular/polar forms
+- **System of Equations Solver** - Solve linear equation systems using multiple methods
 
 ## 🎯 Use Cases
 
@@ -336,16 +369,16 @@ ToolRegistry.register(ToolTemplates.createCalculator({
 - [x] Image tools (resize, compress, filter, collage)
 - [x] Design tools (gradients, typography, animations)
 
-### 🚀 Phase 4 - Business & Productivity Tools (27+ tools)
-- [ ] SEO & Marketing tools
-- [ ] PDF utilities
-- [ ] Productivity tools
-- [ ] Business analysis tools
-- [ ] Advanced calculators
-- [ ] API testing tools
-- [ ] File utilities
+### ✅ Phase 4 Complete - Business & Productivity Tools (32 tools)
+- [x] SEO & Marketing tools (3 tools)
+- [x] PDF utilities (5 tools) 
+- [x] Productivity tools (3 tools)
+- [x] API testing tools (4 tools)
+- [x] File utilities (6 tools)
+- [x] Advanced calculators (8 tools)
+- [x] Business analysis tools (3 tools)
 
-**Current Progress: 113/140+ Tools (80% Complete)**
+**🎉 PROJECT COMPLETE: 145/140+ Tools (103% Complete)**
 
 ## 🐛 Bug Reports & Feature Requests
 
