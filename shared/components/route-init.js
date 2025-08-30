@@ -18,8 +18,8 @@ class RouteInitializer {
     initializeRoutes() {
         // Homepage route
         this.router.addRoute('/', this.createHomepage.bind(this), {
-            title: 'Utility Toolkit - 145+ Free Static Tools',
-            description: 'Replace expensive SaaS subscriptions with 145+ free, privacy-focused, client-side utility tools. No data collection, no sign-ups, no servers required.',
+            title: 'Utility Toolkit - 149+ Free Static Tools',
+            description: 'Replace expensive SaaS subscriptions with 149+ free, privacy-focused, client-side utility tools. No data collection, no sign-ups, no servers required.',
             keywords: 'calculator, converter, utility tools, free tools, client-side tools, privacy-focused, no signup'
         });
         
@@ -85,7 +85,7 @@ class RouteInitializer {
             this.initializeMobileMenu();
         }, {
             title: 'Sitemap - Utility Toolkit',
-            description: 'Complete list of all 145+ utility tools available in the toolkit.'
+            description: 'Complete list of all 149+ utility tools available in the toolkit.'
         });
         
         // Search results
@@ -197,7 +197,7 @@ class RouteInitializer {
                         <h1 class="text-5xl font-bold text-gray-900 mb-6">
                             Replace Expensive SaaS with
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                                145+ Free Tools
+                                149+ Free Tools
                             </span>
                         </h1>
                         <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
