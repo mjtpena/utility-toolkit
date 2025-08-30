@@ -4,13 +4,15 @@
  */
 
 class UtilityRouter {
-    constructor() {
+    constructor(autoInit = true) {
         this.routes = new Map();
         this.currentRoute = null;
         this.defaultRoute = '/';
         
-        // Initialize router
-        this.init();
+        // Initialize router only if autoInit is true
+        if (autoInit) {
+            this.init();
+        }
     }
     
     init() {

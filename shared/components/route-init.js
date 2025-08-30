@@ -5,11 +5,14 @@
 
 class RouteInitializer {
     constructor() {
-        this.router = new UtilityRouter();
+        this.router = new UtilityRouter(false); // Don't auto-initialize
         this.pageGenerator = new PageGenerator();
         
         this.initializeRoutes();
         this.setupGlobalEventHandlers();
+        
+        // Initialize router after all routes are set up
+        this.router.init();
     }
     
     initializeRoutes() {
